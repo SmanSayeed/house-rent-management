@@ -1,7 +1,10 @@
-const userModel = require("../models/user");
+const userModel = require("./user");
 const bcrypt = require("bcrypt");
 var jwt = require('jsonwebtoken');
-const SECRET_KEY = "saad";
+const dotenv = require("dotenv");
+dotenv.config();
+
+const SECRET_KEY=process.env.SECRET_KEY;
 
 const signup = async (req,res) => {
     //exisiting user check
@@ -53,7 +56,7 @@ const signin= async (req,res) => {
             return res.status(400).json({message:"Invalid credentials"});
         }
        
-
+        console.log("SECRET_KEY",SECRET_KEY);
         const token = jwt.sign({
             email:exisitingUser.email,
             id:exisitingUser._id,     

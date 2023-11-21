@@ -1,0 +1,2 @@
+Make a env folder
+make local.env or prod.env or test.env
