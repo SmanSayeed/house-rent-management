@@ -16,7 +16,7 @@ const documentSchema = new mongoose.Schema({
 });
 
 
-const paymentSchema = new mongoose.Schema(
+const paymentInfoSchema = 
     {
         houseRent: {
             type: Number,
@@ -24,15 +24,15 @@ const paymentSchema = new mongoose.Schema(
         },
         washaBill: {
             type: Number,
-            required: true,
+            required: false,
         },
         cleanerBill: {
             type: Number,
-            required: true,
+            required: false,
         },
         gasBill: {
             type: Number,
-            required: true,
+            required: false,
         },
         extendableCharges: [
             {
@@ -47,7 +47,7 @@ const paymentSchema = new mongoose.Schema(
             },
         ],   
 }
-);
+;
 
 const paymentRecordSchema = new mongoose.Schema({
     paymentStatus:{
@@ -117,7 +117,7 @@ const tenantSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    payments:paymentSchema,
+    paymentInfo:paymentInfoSchema,
    
     description: {
         type: String,
@@ -143,6 +143,12 @@ const tenantSchema = mongoose.Schema({
     },
     documents: [documentSchema],
     paymentRecords: [paymentRecordSchema],
+    paymentRecordIds: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "PaymentRecord",
+        },
+      ], // Reference to paymentRecord documents
 },{timestamps:true});
 
 module.exports = mongoose.model("tenantModel",tenantSchema);
