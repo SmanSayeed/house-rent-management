@@ -1,16 +1,25 @@
 const express = require("express");
-const { getNotes, createNote,updateNote,deleteNote } = require("./noteController.js");
+const { createPaymentRecordForTenant,  updatePaymentRecord,
+    deletePaymentRecord,
+    changePaymentStatus,getPayments } = require("./paymentController.js");
 const auth = require("../../middleware/auth.js");
-const { validateNote, validate } = require("./noteValidator.js");
-const noteRouter = express.Router();
+const { validatePayment, validate } = require("./paymentValidator.js");
+const paymentRouter = express.Router();
 
-noteRouter.get("/",auth,getNotes);
+paymentRouter.get("/",auth,getPayments);
 
-noteRouter.post("/",auth,validate ,createNote);
+paymentRouter.get("/tenant-payments/:tenantId",auth,getPayments);
 
-noteRouter.put("/:id",auth, validate ,updateNote);
+paymentRouter.get("/all-payments-by-month/:year/:month/:tenantId",auth,getPayments);
 
-noteRouter.delete("/:id",auth,deleteNote);
+paymentRouter.post("/",auth,validate ,createPaymentRecordForTenant);
+
+paymentRouter.put("/:id",auth, validate ,updatePaymentRecord);
+
+paymentRouter.delete("/:id",auth,deletePaymentRecord);
+
+paymentRouter.put("/change-payment-status/:id",auth,changePaymentStatus);
 
 
-module.exports = noteRouter;
+
+module.exports = paymentRouter;

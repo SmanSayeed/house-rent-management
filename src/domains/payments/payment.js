@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const paymentRecordSchema = new mongoose.Schema({
  tenant: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Tenant",
+        ref: "tenantModel",
         required: true,
       },
   paymentStatus: {
@@ -14,22 +14,22 @@ const paymentRecordSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  paymentDetails: {
+ 
     houseRent: {
       type: Number,
       required: true,
     },
     washaBill: {
       type: Number,
-      required: true,
+      required: false,
     },
     cleanerBill: {
       type: Number,
-      required: true,
+      required: false,
     },
     gasBill: {
       type: Number,
-      required: true,
+      required: false,
     },
     extendableCharges: [
       {
@@ -43,7 +43,7 @@ const paymentRecordSchema = new mongoose.Schema({
         },
       },
     ],
-  },
+  
   paymentDate: {
     type: Date,
     default: Date.now,

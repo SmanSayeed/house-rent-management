@@ -3,8 +3,8 @@ const { check, validationResult } = require('express-validator');
 const sendResponse = require('../../utility/response'); // Update the path as needed
 
 const validateNote = [
-    check('title').notEmpty().withMessage('Title is required'),
-    check('description').notEmpty().withMessage('Description is required'),
+    // check('title').notEmpty().withMessage('Title is required'),
+    // check('description').notEmpty().withMessage('Description is required'),
 ];
 
 /**

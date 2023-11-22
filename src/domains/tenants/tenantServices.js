@@ -85,70 +85,7 @@ const getTenants = async () => {
     }
 };
 
-const createPaymentRecordForTenant = async (tenantId, paymentRecordData) => {
-    try {
-      const tenant = await tenantModel.findById(tenantId);
-  
-      // Create payment record
-      const paymentRecord = await PaymentRecordModel.create({
-        tenant: tenantId,
-        ...paymentRecordData,
-      });
-  
-      // Update tenant's paymentRecordIds array
-      tenant.paymentRecordIds.push(paymentRecord._id);
-      await tenant.save();
-  
-      return paymentRecord;
-    } catch (error) {
-      console.error(error);
-      throw new Error("Error creating payment record for tenant");
-    }
-  };
 
-  const updatePaymentRecord = async (tenantId, paymentRecordId, updatedData) => {
-    try {
-      const updatedPaymentRecord = await PaymentRecordModel.findByIdAndUpdate(
-        paymentRecordId,
-        updatedData,
-        { new: true }
-      );
-      return updatedPaymentRecord;
-    } catch (error) {
-      console.error(error);
-      throw new Error("Error updating payment record");
-    }
-  };
-  
-  const deletePaymentRecord = async (tenantId, paymentRecordId) => {
-    try {
-      // Remove payment record from PaymentRecord collection
-      await PaymentRecordModel.findByIdAndRemove(paymentRecordId);
-  
-      // Remove payment record ID from tenant's paymentRecordIds array
-      await tenantModel.findByIdAndUpdate(tenantId, {
-        $pull: { paymentRecordIds: paymentRecordId },
-      });
-    } catch (error) {
-      console.error(error);
-      throw new Error("Error deleting payment record");
-    }
-  };
-  
-  const changePaymentStatus = async (tenantId, paymentRecordId, paymentStatus) => {
-    try {
-      await PaymentRecordModel.findByIdAndUpdate(
-        paymentRecordId,
-        { paymentStatus },
-        { new: true }
-      );
-    } catch (error) {
-      console.error(error);
-      throw new Error("Error changing payment status");
-    }
-  };
   
 
-module.exports = { createTenant, updateTenant, deleteTenant, getTenants, createPaymentRecordForTenant,  updatePaymentRecord,
-    deletePaymentRecord,
-    changePaymentStatus, };
+module.exports = { createTenant, updateTenant, deleteTenant, getTenants };

@@ -20,7 +20,7 @@ const paymentInfoSchema =
     {
         houseRent: {
             type: Number,
-            required: true,
+            required: false,
         },
         washaBill: {
             type: Number,
@@ -142,7 +142,6 @@ const tenantSchema = mongoose.Schema({
         type: String, // Assuming you store the image URL or path as a string
     },
     documents: [documentSchema],
-    paymentRecords: [paymentRecordSchema],
     paymentRecordIds: [
         {
           type: mongoose.Schema.Types.ObjectId,

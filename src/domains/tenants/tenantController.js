@@ -58,10 +58,11 @@ const updateTenant = async (req, res) => {
             gasBill:gasBill,
             extendableCharges:extendableCharges
         });
-        res.json(updatedTenant);
+      
+        sendResponse(res, 'success', 201, 'Tenant updated successfully', updatedTenant);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Something went wrong" });
+        sendResponse(res, 'error', 500, 'Something went wrong', null, error.message);
     }
 };
 
@@ -70,88 +71,23 @@ const deleteTenant = async (req, res) => {
 
     try {
         const tenant = await tenantService.deleteTenant(id);
-        res.status(202).json(tenant);
+        sendResponse(res, 'success', 202, 'Tenant delete successfully', tenant);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Something went wrong" });
+        sendResponse(res, 'error', 500, 'Something went wrong', null, error.message);
     }
 };
 
 const getTenants = async (req, res) => {
     try {
         const tenants = await tenantService.getTenants();
-        res.status(200).json(tenants);
+        // res.status(200).json(tenants);
+        sendResponse(res, 'success', 200, 'Tenants found', tenants);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Something went wrong" });
+        sendResponse(res, 'error', 500, 'Something went wrong', null, error.message);
     }
 };
 
-const createPaymentRecordForTenant = async (req, res) => {
-    try {
-      const { paymentStatus, paymentMonth, paymentDetails } = req.body;
-      const paymentRecord = await tenantService.createPaymentRecordForTenant(
-        req.params.id,
-        {
-          paymentStatus,
-          paymentMonth,
-          paymentDetails,
-        }
-      );
-      res.status(201).json(paymentRecord);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Something went wrong" });
-    }
-  };
 
-  const updatePaymentRecord = async (req, res) => {
-    try {
-      const { paymentStatus, paymentMonth, paymentDetails } = req.body;
-      const updatedPaymentRecord = await tenantService.updatePaymentRecord(
-        req.params.tenantId,
-        req.params.paymentRecordId,
-        {
-          paymentStatus,
-          paymentMonth,
-          paymentDetails,
-        }
-      );
-      res.status(200).json(updatedPaymentRecord);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Something went wrong" });
-    }
-  };
-  
-  const deletePaymentRecord = async (req, res) => {
-    try {
-      await tenantService.deletePaymentRecord(
-        req.params.tenantId,
-        req.params.paymentRecordId
-      );
-      res.status(204).end();
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Something went wrong" });
-    }
-  };
-  
-  const changePaymentStatus = async (req, res) => {
-    try {
-      const { paymentStatus } = req.body;
-      await tenantService.changePaymentStatus(
-        req.params.tenantId,
-        req.params.paymentRecordId,
-        paymentStatus
-      );
-      res.status(200).json({ message: "Payment status changed successfully" });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Something went wrong" });
-    }
-  };
-
-module.exports = { createTenant, updateTenant, deleteTenant, getTenants,createPaymentRecordForTenant,  updatePaymentRecord,
-    deletePaymentRecord,
-    changePaymentStatus, };
+module.exports = { createTenant, updateTenant, deleteTenant, getTenants };
