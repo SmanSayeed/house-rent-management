@@ -1,19 +1,19 @@
 const sendResponse = require("../../utility/response");
-// noteController.js
+// flatController.js
 
-const noteService = require("./noteServices");
+const flatService = require("./flatServices");
 
-const createNote = async (req, res) => {
+const createFlat = async (req, res) => {
     const { title, description } = req.body;
 
     try {
-        const newNote = await noteService.createNote({
+        const newFlat = await flatService.createFlat({
             title: title,
             description: description,
             userId: req.userId
         });
-        // res.status(201).json(newNote);
-        sendResponse(res, 'success', 201, 'Note created successfully', newNote);
+        // res.status(201).json(newFlat);
+        sendResponse(res, 'success', 201, 'Flat created successfully', newFlat);
     } catch (error) {
         console.error(error);
         // res.status(500).json({ message: "Something went wrong" });
@@ -22,43 +22,43 @@ const createNote = async (req, res) => {
     }
 };
 
-const updateNote = async (req, res) => {
+const updateFlat = async (req, res) => {
     const id = req.params.id;
     const { title, description } = req.body;
 
     try {
-        const updatedNote = await noteService.updateNote(id, {
+        const updatedFlat = await flatService.updateFlat(id, {
             title: title,
             description: description,
             userId: req.userId
         });
-        res.json(updatedNote);
+        res.json(updatedFlat);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Something went wrong" });
     }
 };
 
-const deleteNote = async (req, res) => {
+const deleteFlat = async (req, res) => {
     const id = req.params.id;
 
     try {
-        const note = await noteService.deleteNote(id);
-        res.status(202).json(note);
+        const flat = await flatService.deleteFlat(id);
+        res.status(202).json(flat);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Something went wrong" });
     }
 };
 
-const getNotes = async (req, res) => {
+const getFlats = async (req, res) => {
     try {
-        const notes = await noteService.getNotes(req.userId);
-        res.status(200).json(notes);
+        const flats = await flatService.getFlats();
+        res.status(200).json(flats);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Something went wrong" });
     }
 };
 
-module.exports = { createNote, updateNote, deleteNote, getNotes };
+module.exports = { createFlat, updateFlat, deleteFlat, getFlats };
