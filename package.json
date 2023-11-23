@@ -8,6 +8,9 @@
     "dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=env/local.env",
     "prod": "node src/index.js"
   },
+  "engines": {
+    "node":">=18.0.0 <19.0.0"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
