@@ -37,6 +37,8 @@ const signup = async (req,res) => {
         const data = {user:result,token:token}
         // res.status(201).json({message:"User created successfully"});
 
+        res.cookie('jwtToken', token, { httpOnly: true });
+
         sendResponse(res, 'success', 202, 'User created successfully', data);
         
 

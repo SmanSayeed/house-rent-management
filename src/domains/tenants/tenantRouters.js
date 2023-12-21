@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-const { getTenants, createTenant,updateTenant,deleteTenant } = require("./tenantController.js");
+const { getTenants, createTenant,updateTenant,deleteTenant,getAllTenantsWithDetails,getTenantDetails } = require("./tenantController.js");
 const auth = require("../../middleware/auth.js");
 const { validateTenant, validate } = require("./tenantValidator.js");
 
@@ -11,6 +11,10 @@ const upload = multer({ storage: storage });
 const tenantRouter = express.Router();
 
 tenantRouter.get("/",auth,getTenants);
+
+tenantRouter.get("/:id",auth,getTenantDetails);
+
+tenantRouter.get("/all",auth,getAllTenantsWithDetails);
 
 tenantRouter.post("/",auth,
 // validate,upload.array("documents", 5),

@@ -89,5 +89,27 @@ const getTenants = async (req, res) => {
     }
 };
 
+const getAllTenantsWithDetails = async (req,res) => {
+    try{
+        const tenantsWithDetails = await tenantService.getAllTenantsWithPayments();
+      
+        sendResponse(res, 'success', 200, 'Tenants found', tenantsWithDetails);
 
-module.exports = { createTenant, updateTenant, deleteTenant, getTenants };
+    }catch(error){
+        console.error(error);
+        sendResponse(res, 'error', 500, 'Something went wrong', null, error.message);
+    }
+}
+
+const getTenantDetails = async (req,res) => {
+    const id = req.params.id;
+    try{
+        const tenant = await tenantService.getTenantDetails(id);
+        sendResponse(res,'success',200,'Tenant details found',tenant);
+    }catch(error){
+        console.error(error);
+        sendResponse(res, 'error', 500, 'Something went wrong', null, error.message);
+    }
+}
+
+module.exports = { createTenant, updateTenant, deleteTenant, getTenants,getAllTenantsWithDetails, getTenantDetails };
